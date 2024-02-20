@@ -2,6 +2,8 @@ import React from 'react'
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import '../styles.css'
 
 
 
@@ -20,16 +22,18 @@ export default function PostsComponent() {
           console.error('Error fetching posts:', error);
         });
     }, []);
+
   
     return (
+        
       <div className="container mt-5">
         <h1 className="mb-4">Posts</h1>
         <div className="row">
-          {posts.map(post => (
+          {posts && posts.map(post => (
             <div key={post.id} className="col-md-4 mb-4">
               <div className="card">
                 <div className="card-body">
-                  <h5 className="card-title">{post.title.rendered}</h5>
+                  <Link to={`/post/${post.id}`} className="custom-link"><h5 className="card-title">{post.title.rendered}</h5></Link>
                   <p className="card-text" dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}></p>
                   <p className="card-text"><strong>Author:</strong> {post.author}</p>
                   <p className="card-text"><strong>Date:</strong> {post.date}</p>
@@ -39,5 +43,6 @@ export default function PostsComponent() {
           ))}
         </div>
       </div>
+          
     );
   };
